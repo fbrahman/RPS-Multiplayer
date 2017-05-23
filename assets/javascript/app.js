@@ -9,23 +9,61 @@ var config = {
 
 firebase.initializeApp(config);
 
-var database = firebase.database();
+var databaseFB = {
+	database: firebase.database(),
 
-// var ref = database.ref("game/game1");
+	connections: function (){
+		
+		let connectionsRef = databaseFB.database.ref("/connections");
+		let connectedRef = databaseFB.database.ref(".info/connected");
+		
+		connectedRef.on("value", function(snap){
+			if(snap.val()){
+				let con = connectionsRef.push(true);
+				con.onDisconnect().remove();
+			}
+		});
+	},
 
-// var data = {
-// 	name:"Fahad",
-// 	Display: "test1"
-// };
+	createGame: function(player1){
 
-// ref.push(data);
+		let gameRef = databaseFB.database.ref("/games");
 
-var game = {
-	instance: 0,
-	gameName:"",
+		gamePlayer.player1.name = player1;
+		gamePlayer.state = 1;
+		gamePlayer.currGameKey = gameRef.push(gamePlayer).key;
+
+		console.log(gamePlayer.currGameKey);
+	}, 
+
+	joinGame: function(player2){
+
+		let gameRef = databaseFB.database.ref("/games");
+		let gameRefUpdate = gameRef.child(gamePlayer.currGameKey);
+
+		gameRefUpdate.update(gamePlayer);
+		gameRefUpdate.transaction(function(test){
+
+			if(test.state === 1){
+
+				gamePlayer.state = 2;
+				test.state = gamePlayer.state;
+				gamePlayer.player2.name = player2;
+				test.player2.name = gamePlayer.player2.name;
+			}
+			return test;
+
+		})
+	}
+};
+
+var gamePlayer = {
+	currGameKey: "",
+	state: 0,
 	player1: {
 		name:"",
 		choice:"",
+		player1key:"",
 		win: 0, 
 		lose: 0,
 		tie: 0,
@@ -33,38 +71,47 @@ var game = {
 	player2: {
 		name:"",
 		choice:"",
+		player2key:"",
 		win: 0, 
 		lose: 0,
 		tie: 0,
 	},
+};
 
-	creategame:function(){
-		let gameNum = game.instance++;
-		let newGame = Object.create(game);
-		newGame.gameName = ("game"+ gameNum);
+databaseFB.connections();
 
-		let ref = database.ref("game/game"+gameNum);
+$("#createGame").click(function(){
+	
+	let playerName = $("#playerName").val();
 
-		ref.push(newGame);
-		this.getGameData();
-	},
-
-	getGameData: function(){
-		let ref = database.ref("game");
-		ref.on("value",this.outputData, this.errorData);
-	},
-
-	outputData: function(data){
-		console.log(data.val());
-	},
-
-	error:function(error){
-		console.log("error");
+	if (gamePlayer.state === 0){
+		databaseFB.createGame(playerName);
+	} else if (gamePlayer.state === 1){
+		databaseFB.joinGame(playerName);
 	}
 
-}
+});
 
-game.creategame();
+var test = "";
+
+databaseFB.database.ref().on("value", function(snapshot) {
+
+	if (snapshot.child("games").exists()){
+		let game = snapshot.val().games;
+		test = game;
+
+		console.log("inside the loop - games exists")
+
+		// gamePlayer.currGameKey = game.currGameKey;
+		// gamePlayer.state = game.state;
+		// game.player1.name = game.player1.name;
+	}
+});
+
+
+
+
+
 
 // var rps = {
 //     player1: {
