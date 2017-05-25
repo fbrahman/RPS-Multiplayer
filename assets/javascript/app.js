@@ -57,11 +57,11 @@ $("#submitName").click(function(
 
 	userRef.child(key).onDisconnect().remove();
 
-	database.ref().once("value", function(snap){
+	database.ref().on("value", function(snap){
 		if(!snap.child("game").exists()){
 			$("#createGameBtn").removeClass("disabled");
 			console.log("creator doesn't exist");
-		}else{
+		}else if (userInfo.role === ""){
 			$("#joinGameBtn").removeClass("disabled");
 			console.log("creator does exist");
 			console.log(snap.child("game").val());
@@ -74,7 +74,9 @@ $("#submitName").click(function(
 			// gameInfo.creator = lastObj.creator;
 			gameInfo.gKey = lastObj.gKey;
 
-			console.log(gameInfo.creator,gameInfo.gKey);
+			$("#createGameBtn").addClass("disabled");
+
+			// console.log(gameInfo.creator,gameInfo.gKey);
 		}
 	})
 });
@@ -101,6 +103,7 @@ $("#createGameBtn").click(function(){
 	userInfo.role = "creator";
 
 	$("#createGameBtn").addClass("disabled");
+	$("#joinGameBtn").addClass("disabled");
 
 	createGameBoard();
 });
@@ -177,14 +180,41 @@ function playerChoice(){
 				creatorChoice:pChoice
 			})
 		})
+		winLose();
 	} else if (userInfo.role === "joiner") {
 		$(".rGameOption").click(function(){
 			let jChoice = ($(this).attr("value"));
 			gameRef.child(gameInfo.gKey).update({
 				joinerChoice:jChoice
 			})
-		})	
+		})
+		winLose();
 	}
+}
+
+function winLose(){
+	gameRef.child(gameInfo.gKey).once("value", function(snap){
+		if(snap.child("creatorChoice").exists() && snap.child("joinerChoice").exists()){
+			let cChoice = snap.val().creatorChoice;
+			let jChoice = snap.val().joinerChoice;
+			let winState = (3 + cChoice - jChoice) % 3;
+
+			console.log("inside if statement for winLose");
+
+			switch(winState){
+				case 0:
+					console.log("it's a tie!");
+					break;
+				case 1:
+					console.log("Creator win's");
+					break;
+				case 2:
+					console.log("Joiner win's");
+					break;
+			}
+
+		}
+	})
 }
 
 
