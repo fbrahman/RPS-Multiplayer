@@ -1,0 +1,1 @@
+secondary person joins before the first game is created.

@@ -22,7 +22,8 @@ let playerName = "";
 
 let userInfo  = {
 	name:"",
-	uKey:""
+	uKey:"",
+	role:""
 };
 
 let gameInfo ={
@@ -97,6 +98,8 @@ $("#createGameBtn").click(function(){
 		role:"creator"
 	})
 
+	userInfo.role = "creator";
+
 	$("#createGameBtn").addClass("disabled");
 
 	createGameBoard();
@@ -112,6 +115,8 @@ $("#joinGameBtn").click(function(){
 	userRef.child(userInfo.uKey).update({
 		role:"joiner"
 	})
+
+	userInfo.role = "joiner";
 
 	$("#joinGameBtn").addClass("disabled");
 
@@ -137,10 +142,12 @@ function createGameBoard(){
 
 				$("#leftPlayer").removeClass("hidePlayer");
 				$("#cName").text(p1);
+
+				playerChoice();
 				break;
 		}
 
-	})
+	});
 
 	// if (caller === "creator"){
 	// 	console.log("creator called me - watiing for player");
@@ -159,6 +166,25 @@ function createGameBoard(){
 	// })
 	
 	//}
+}
+
+function playerChoice(){
+
+	if (userInfo.role === "creator"){
+		$(".lGameOption").click(function(){
+			let pChoice = ($(this).attr("value"));
+			gameRef.child(gameInfo.gKey).update({
+				creatorChoice:pChoice
+			})
+		})
+	} else if (userInfo.role === "joiner") {
+		$(".rGameOption").click(function(){
+			let jChoice = ($(this).attr("value"));
+			gameRef.child(gameInfo.gKey).update({
+				joinerChoice:jChoice
+			})
+		})	
+	}
 }
 
 
