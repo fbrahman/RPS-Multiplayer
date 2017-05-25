@@ -1,15 +1,16 @@
 html {
     height: 100%;
+    box-sizing: border-box;
 }
 
 body {
     /*flexbox for overall page children include header mainsection footer*/
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: 100%;
 }
 
-h1 {
+/*h1 {
     font-size: 2em;
 }
 
@@ -31,13 +32,33 @@ h5 {
 
 h6 {
     font-size: .75em;
-}
+}*/
 
 .mainSection {
     /*allows the main section to take up all available space pushing footer to the bottom*/
     flex: 1;
 }
+
+.element{
+    border-style: solid;
+    border-width: 1px;
+    border-color: yellow;
+}
+
+.gameOption{
+    height: 150px !important;
+    width: 100% !important;
+}
+
 #copyright {
     text-align: center;
     padding: .5% 0 .5% 0;
+}
+
+/*#leftPlayer{
+    visibility: hidden;
+}*/
+
+.hidePlayer{
+    visibility: hidden;
 }

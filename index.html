@@ -3,37 +3,105 @@
 
 <head>
     <title>title</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
     <header>
-        <h1 id="title"></h1>
-    </header>
-    <section class="mainSection">
-    <div id="signIn">
-        <form>         
-            <label>
-                Name
-            </label>
-            <input id="playerName" type="text" name="Name" placeholder="John Smith">
-            <input id ="createGame" type="submit" value="Create Game">
-        </form> 
+    <div class = container>
+        <div class = row>
+            <div class="col-sm-12">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="#" class="navbar-brand">Rock Paper Scissors -- SHOOT!</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="disabled" id="createGameBtn"><a role="button" href="#">Create Game</a></li>
+                        <li class= "disabled" id="joinGameBtn"><a  role="button" href="#">Join Game</a></li>
+                    </ul>
+                </div>
+            </nav>
+            </div>
+        </div>
     </div>
+    </header>
+    <section class="mainSection container">
+
+        <!-- Name modal -->
+        <div class="modal fade" id="nameModal" tabindex="-1" role="dialog" aria-labelledby="nameModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="nameModalTitle">Please enter your name</h4>
+              </div>
+              <div class="modal-body">
+                <input type="text" name="nameInput" id="nameInput" placeholder="John Doe" class="form-control">
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal" id="submitName">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="container gameBoard">
+            <div class="row">
+                <div class="col-sm-5 element">
+                    <div class="panel panel-info hidePlayer" id="leftPlayer">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Player Name: <span id="cName"></span></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="thumbnail">
+                                <img src="assets/images/rock.svg" class="gameOption">
+                                <img src="assets/images/paper.svg" class="gameOption">
+                                <img src="assets/images/scissors.svg" class="gameOption">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 element">mid</div>
+                <div class="col-sm-5 element">
+                    <div class="panel panel-danger hidePlayer" id="rightPlayer">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Player Name: <span id="jName"></span></h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="thumbnail">
+                                <img src="assets/images/rock.svg" class="gameOption">
+                                <img src="assets/images/paper.svg" class="gameOption">
+                                <img src="assets/images/scissors.svg" class="gameOption">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </section>
     <footer>
         <div id="copyright">
             &#169; Copyright 2017 Fahad Rahman
+
+            <!-- <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a> -->
         </div>
     </footer>
-    <!-- jQuery and JavaScript links -->
-
+    <!-- firebase link -->
     <script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+    <!-- plug-in link for livereload -->
     <script>
     document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
     </script>
+    <!-- jQuery link -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- link to javaScript file -->
     <script type="text/javascript" src="assets/javaScript/app.js"></script>
 </body>
 
