@@ -15,11 +15,11 @@ body {
     flex: 1;
 }
 
-.element{
+/*.element{
     border-style: solid;
     border-width: 1px;
     border-color: yellow;
-}
+}*/
 
 .lGameOption, .rGameOption{
     height: 150px !important;

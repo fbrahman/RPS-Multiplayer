@@ -133,16 +133,23 @@ function joinGame() {
 }
 
 userRef.on("child_removed", function(snap) {
-    chatRef.push().set({
-    	name: "Alert",
-    	message: "player disconnected"
-    });
+    
+	chatRef.remove();
+
+    // chatRef.push().set({
+    // 	name: "Alert",
+    // 	message: "player disconnected"
+    // });
 
     gameRef.child(gameInfo.gKey).remove();
 
     $("#leftPlayer").addClass("hidePlayer");
     $("#rightPlayer").addClass("hidePlayer");
     $("#score").addClass("hideScore");
+
+    $("#creatorScoreNum").text(0);
+    $("#joinerScoreNum").text(0);
+    $("#tieScoreNum").text(0);
 
 
     startGame();
@@ -253,21 +260,27 @@ function winLose() {
                     console.log("it's a tie!");
                     tScore++;
                     gameRef.child(gameInfo.gKey).update({
-                            tScore: tScore
+                            tScore: tScore,
+                            creatorChoice:null,
+                            joinerChoice:null
                         })
                     break;
                 case 1:
                     console.log("Creator win's");
                     cScore++;
                     gameRef.child(gameInfo.gKey).update({
-                            cScore: cScore
+                            cScore: cScore,
+                            creatorChoice:null,
+                            joinerChoice:null
                         })
                     break;
                 case 2:
                     console.log("Joiner win's");
                     jScore++;
                     gameRef.child(gameInfo.gKey).update({
-                            jScore: jScore
+                            jScore: jScore,
+                            creatorChoice:null,
+                            joinerChoice:null
                         })
                     break;
             }
@@ -286,6 +299,8 @@ function sendChat() {
         name: userInfo.name,
         message: messageField
     });
+
+    $("#chatMsg").val("");
 }
 
 function addChatMessage(name, message) {
