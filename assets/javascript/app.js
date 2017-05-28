@@ -181,6 +181,7 @@ function createGameBoard() {
             case 1:
                 $("#leftPlayer").removeClass("hidePlayer");
                 $("#cName").text(p1);
+                // scoreUpdate();
                 break;
             case 2:
                 $("#rightPlayer").removeClass("hidePlayer");
@@ -189,6 +190,7 @@ function createGameBoard() {
                 $("#leftPlayer").removeClass("hidePlayer");
                 $("#cName").text(p1);
 
+                // scoreUpdate();
                 $("#score").removeClass("hideScore");
                 $("#cNameS").text(p1);
                 $("#jNameS").text(p2);
@@ -211,6 +213,7 @@ function playerChoice() {
                 gameRef.child(gameInfo.gKey).update({
                     creatorChoice: pChoice
                 })
+                scoreUpdate();
                 winLose();
             });
         case "joiner":
@@ -219,6 +222,7 @@ function playerChoice() {
                 gameRef.child(gameInfo.gKey).update({
                     joinerChoice: jChoice
                 })
+                scoreUpdate();
                 winLose();
             });
     }
